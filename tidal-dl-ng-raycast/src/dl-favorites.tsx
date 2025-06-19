@@ -7,13 +7,12 @@ import {
   Detail,
   Icon,
   useNavigation,
-  Keyboard,
   showHUD,
   Clipboard,
   open,
 } from "@raycast/api";
 import { useState, useEffect } from "react";
-import { executeCommand, checkTidalInstallation, getTidalCommand, executeStreamingCommand } from "./utils";
+import { checkTidalInstallation, getTidalCommand, executeStreamingCommand } from "./utils";
 import ProgressView from "./ProgressView";
 import { homedir } from "os";
 import { join } from "path";
@@ -73,18 +72,15 @@ export default function DownloadFavoritesCommand() {
     setIsLoading(true);
 
     // Execute download with Toast progress
-    const result = await executeStreamingCommand(
-      `${getTidalCommand()} ${favoriteType.command}`,
-      {
-        title: `Downloading ${favoriteType.title}`,
-        showProgress: true,
-      }
-    );
+    const result = await executeStreamingCommand(`${getTidalCommand()} ${favoriteType.command}`, {
+      title: `Downloading ${favoriteType.title}`,
+      showProgress: true,
+    });
 
     if (result.success) {
       // Set download path
       const downloadPath = join(homedir(), "download");
-      
+
       if (result.toast) {
         result.toast.primaryAction = {
           title: "Open Downloads Folder",
@@ -142,7 +138,7 @@ pip install tidal-dl-ng
                     <ProgressView
                       title={`Download ${type.title}`}
                       command={type.command}
-                      onComplete={(success, output) => {
+                      onComplete={(success) => {
                         if (!success) {
                           showToast({
                             style: Toast.Style.Failure,

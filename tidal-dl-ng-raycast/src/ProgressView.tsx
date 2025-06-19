@@ -1,6 +1,6 @@
 import { ActionPanel, Action, Detail, Icon, Keyboard } from "@raycast/api";
 import { useState, useEffect } from "react";
-import { executeStreamingCommand, executeCommand, getTidalCommand } from "./utils";
+import { executeStreamingCommand, getTidalCommand } from "./utils";
 
 interface ProgressViewProps {
   title: string;
@@ -96,9 +96,7 @@ ${isRunning ? "*Press Cmd+C to cancel*" : ""}
   const getActions = () => {
     return (
       <ActionPanel>
-        {isComplete && (
-          <Action.CopyToClipboard title="Copy Output" content={output} />
-        )}
+        {isComplete && <Action.CopyToClipboard title="Copy Output" content={output} />}
         <Action
           title="Close"
           icon={Icon.XMarkCircle}
@@ -111,11 +109,5 @@ ${isRunning ? "*Press Cmd+C to cancel*" : ""}
     );
   };
 
-  return (
-    <Detail
-      markdown={getMarkdown()}
-      isLoading={isRunning && !output}
-      actions={getActions()}
-    />
-  );
+  return <Detail markdown={getMarkdown()} isLoading={isRunning && !output} actions={getActions()} />;
 }

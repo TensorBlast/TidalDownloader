@@ -433,18 +433,18 @@ export async function executeStreamingCommand(
     childProcess.stdout?.on("data", (data: Buffer) => {
       const text = data.toString();
       output += text;
-      
+
       // Simple counter logic - only count "Downloaded item" occurrences
       if (toast) {
         console.log("tidal-dl-ng output:", text.trim());
-        
+
         // Count occurrences of "Downloaded item" in the output
         const downloadedMatches = text.match(/Downloaded item/gi);
         if (downloadedMatches) {
           downloadedCount += downloadedMatches.length;
-          toast.message = `Downloaded ${downloadedCount} item${downloadedCount !== 1 ? 's' : ''}`;
+          toast.message = `Downloaded ${downloadedCount} item${downloadedCount !== 1 ? "s" : ""}`;
         }
-        
+
         // Show initial status if no downloads yet
         if (downloadedCount === 0 && toast.message === "Download started") {
           if (text.includes("Fetching") || text.includes("Loading") || text.includes("Processing")) {
@@ -452,15 +452,14 @@ export async function executeStreamingCommand(
           }
         }
       }
-      
+
       options.onOutput?.(text);
     });
 
     childProcess.stderr?.on("data", (data: Buffer) => {
       const text = data.toString();
       output += text;
-      
-      
+
       // Don't treat warnings as errors
       if (!text.includes("Warning")) {
         hasError = true;
@@ -474,9 +473,8 @@ export async function executeStreamingCommand(
     });
 
     childProcess.on("close", (code) => {
-      
       const success = code === 0 && !hasError;
-      
+
       if (toast) {
         if (success) {
           toast.style = Toast.Style.Success;
@@ -496,7 +494,7 @@ export async function executeStreamingCommand(
           }
         }
       }
-      
+
       options.onExit?.(code);
       resolve({
         success: success,
@@ -510,13 +508,13 @@ export async function executeStreamingCommand(
       hasError = true;
       const errorText = error.message;
       output += errorText;
-      
+
       if (toast) {
         toast.style = Toast.Style.Failure;
         toast.title = "Command Failed";
         toast.message = errorText;
       }
-      
+
       options.onError?.(errorText);
       resolve({
         success: false,
@@ -526,4 +524,3 @@ export async function executeStreamingCommand(
     });
   });
 }
-

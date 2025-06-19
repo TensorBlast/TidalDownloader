@@ -166,7 +166,6 @@ const CONFIG_DESCRIPTIONS: Record<
 };
 
 export default function ConfigCommand() {
-  const { push } = useNavigation();
   const [config, setConfig] = useState<TidalConfig>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isInstalled, setIsInstalled] = useState<boolean | null>(null);

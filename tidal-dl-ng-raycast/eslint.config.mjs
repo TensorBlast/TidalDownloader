@@ -7,6 +7,8 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  recommendedConfig: {},
+  allConfig: {}
 });
 
 const config = [...compat.extends("@raycast")];
