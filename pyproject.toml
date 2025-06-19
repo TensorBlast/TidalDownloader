@@ -7,5 +7,6 @@ requires-python = ">=3.13"
 dependencies = [
     "click>=8.2.1",
     "paramiko>=3.5.1",
+    "pillow>=11.2.1",
     "rich>=14.0.0",
 ]
