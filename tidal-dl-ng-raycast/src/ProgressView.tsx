@@ -100,7 +100,7 @@ ${isRunning ? "*Press Cmd+C to cancel*" : ""}
         <Action
           title="Close"
           icon={Icon.XMarkCircle}
-          shortcut={Keyboard.Shortcut.Common.Close}
+          shortcut={{ modifiers: ["cmd"], key: "w" }}
           onAction={() => {
             onCancel?.();
           }}
